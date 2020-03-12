@@ -1,7 +1,11 @@
 package com.may.chapter3;
 
 
-public class MyLinkedList<T> {
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class MyLinkedList<T> implements Iterable<T> {
     // 链表大小
     private int theSize;
     // 用于记录修改次数(add\remove)
@@ -191,7 +195,7 @@ public class MyLinkedList<T> {
          * 索引在总大小的一半之内 正向遍历 否则反向遍历
          */
         if (index < size() / 2) {
-            node = beginMarker;
+            node = beginMarker.next;
             for (int i = 0; i < index; i++)
                 node = node.next;
         } else {
@@ -209,6 +213,49 @@ public class MyLinkedList<T> {
     private void indexOutException(int index, int lower, int upper) {
         if (index < lower || index > upper)
             throw new IndexOutOfBoundsException();
+    }
+
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator<T> {
+
+        // 由调用next所返回的项的节点
+        private Node<T> current = beginMarker.next;
+        private int expectedModCount = modCount;
+        private boolean okToRemove = false;
+
+        @Override
+        public boolean hasNext() {
+            return current != endMarker;
+        }
+
+        @Override
+        public T next() {
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+            if (!hasNext())
+                throw new NoSuchElementException();
+
+            T nextItem = current.data;
+            current = current.next;
+            okToRemove = true;
+            return nextItem;
+        }
+
+        public void remove() {
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+            if (!okToRemove)
+                throw new IllegalStateException();
+
+            MyLinkedList.this.remove(current.prev);
+            expectedModCount++;
+            okToRemove = false;
+        }
     }
 
 }

@@ -47,4 +47,30 @@ public class Test {
 
     }
 
+    @org.junit.Test
+    public void testLinked() {
+
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("a");
+        myLinkedList.add("b");
+        myLinkedList.add("c");
+        myLinkedList.add("d");
+
+        for (Object o : myLinkedList) {
+            System.out.println(o);
+        }
+        System.out.println("=== === ===");
+        Iterator iterator = myLinkedList.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+            iterator.remove();
+        }
+
+        System.out.println("=== === ===");
+        for (Object o : myLinkedList) {
+            System.out.println(o);
+        }
+
+    }
+
 }
