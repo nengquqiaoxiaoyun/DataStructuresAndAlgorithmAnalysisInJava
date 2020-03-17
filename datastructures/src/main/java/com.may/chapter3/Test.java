@@ -1,5 +1,7 @@
 package com.may.chapter3;
 
+import com.may.chapter3.exercise.Person;
+
 import java.util.Iterator;
 
 public class Test {
@@ -50,16 +52,26 @@ public class Test {
     @org.junit.Test
     public void testLinked() {
 
+        Person person1 = new Person("张三", 10);
+        Person person2 = new Person("张三", 20);
+        Person person3 = new Person("李四", 10);
+        Person person4 = new Person("李四", 20);
+        Person person5 = new Person("张三", 10);
+
+
+
         MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.add("a");
-        myLinkedList.add("b");
-        myLinkedList.add("c");
-        myLinkedList.add("d");
+        myLinkedList.add(person1);
+        myLinkedList.add(person2);
+        myLinkedList.add(person3);
+        myLinkedList.add(person4);
 
         for (Object o : myLinkedList) {
             System.out.println(o);
         }
+        System.out.println(myLinkedList.contains(person5));
         System.out.println("=== === ===");
+
         Iterator iterator = myLinkedList.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
@@ -71,6 +83,7 @@ public class Test {
             System.out.println(o);
         }
 
+        System.out.println("=== === ===");
     }
 
 }
