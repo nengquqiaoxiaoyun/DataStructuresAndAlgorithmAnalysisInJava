@@ -216,6 +216,29 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
 
+    /**
+     * 判断是否存在某个元素
+     * @param object
+     * @return
+     */
+    public boolean contains(Object object) {
+//        Iterator<T> iterator = iterator();
+//        while (iterator.hasNext()) {
+//            // equals需要保证对象重写了equals和hashcode方法
+//            if (iterator.next().equals(object))
+//                return true;
+//        }
+//        return false;
+
+        Node<T> node = beginMarker.next;
+        while (node != endMarker && !(node.data.equals(object))) {
+            node = node.next;
+        }
+        return (node != endMarker);
+
+    }
+
+
     @Override
     public Iterator<T> iterator() {
         return new LinkedListIterator();
