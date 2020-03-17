@@ -85,6 +85,7 @@ public class MyArrayList<T> implements Iterable<T> {
             throw new ArrayIndexOutOfBoundsException();
     }
 
+
     // 扩容
     private void ensureCapacity(int newCapacity) {
         if (newCapacity < theSize)
