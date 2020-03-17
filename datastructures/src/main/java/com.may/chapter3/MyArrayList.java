@@ -99,6 +99,7 @@ public class MyArrayList<T> implements Iterable<T> {
         }
     }
 
+
     // 将新元素添加到表尾
     public boolean add(T val) {
         add(size(), val);
@@ -125,6 +126,42 @@ public class MyArrayList<T> implements Iterable<T> {
         // 容量 + 1
         theSize++;
     }
+
+
+    /**
+     * 添加所有的元素到集合的末尾
+     * @param items 需要添加的所有元素
+     */
+    public void addAll(Iterable<? extends T> items) {
+        Iterator<? extends T> iterator = items.iterator();
+        while (iterator.hasNext()) {
+            add(iterator.next());
+        }
+    }
+
+    /**
+     * 从集合中删除所有包含的元素
+     * @param items 需要删除的所有元素
+     */
+    public void removeAll(Iterable<? extends T> items) {
+        Iterator<? extends T> needToRemoveIterator = items.iterator();
+        if(!needToRemoveIterator.hasNext())
+            return;
+
+        // 集合中的所有元素
+        Iterator<T> originalIterator = iterator();
+        while (originalIterator.hasNext()) {
+            T originalNext = originalIterator.next();
+            // 需要删除的所有元素
+            while(needToRemoveIterator.hasNext()) {
+                T needToRemoveNext = needToRemoveIterator.next();
+                if(originalNext.equals(needToRemoveNext))
+                    originalIterator.remove();
+            }
+        }
+
+    }
+
 
     /**
      * 删除指定索引的元素
